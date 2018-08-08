@@ -1,0 +1,13 @@
+- hosts: 172.25.4.128
+  user: root
+  tasks:
+    - name: mkdir /demosite
+      file: path=/demosite state=directory
+    - name: mkdir /website
+      file: path=/website state=directory
+    - name: copy wsgi.py
+      copy: src=/mnt/test-obj-dev/wsgi.py dest=/demosite/wsgi.py
+    - name: service
+      service: name=nginx state=running
+    - name: uwsgi
+      shell: uwsgi --ini /etc/uwsgi9090.ini

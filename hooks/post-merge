@@ -1,0 +1,12 @@
+#!/bin/bash
+
+firstline=`git status | sed -n '1p' `
+devstr='On branch dev'
+masterstr='On branch master'
+teststr='On branch test'
+if [ "$devstr" = "$firstline" ]
+then
+git push origin dev
+echo "dev build..."	
+curl -u admin:admin http://172.25.4.129:8080/job/test-obj-dev/build?token=123456
+fi
